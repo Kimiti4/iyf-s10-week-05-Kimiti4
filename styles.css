@@ -1,0 +1,41 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base */
+body {
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient();
+
+
+
+
+}
+:root {
+  --primary: #2b3a67;
+  --secondary: #877cec;
+  --accent: #f0e68c;
+  --text: #222;
+}
+
+h1 {
+    color: #0f766e;
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    background: rgba(240, 249, 255, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px) ;
+    border-radius: 20px;
+    padding: 32px 28px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 10px 30px rgba(0, green, blue, alpha) 
+}

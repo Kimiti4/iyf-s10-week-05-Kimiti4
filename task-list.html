@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delegated Task List</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px;
+      background: #f0f2f5;
+      font-size: 24px;
+    }
+    ul { list-style: none; padding: 0; }
+
+    .animated-bg {
+  background: linear-gradient(270deg, #ff00cc, #3333ff, #00ffcc);
+  background-size: 600% 600%;
+  animation: gradientShift 20s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+h2 {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: rgb(29, 252, 0);
+}
+#taskInput {
+  padding: 10px;
+  font-size: 18px;
+}
+
+    li {
+      padding: 12px;
+      margin: 8px 0;
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    li.completed {
+      text-decoration: line-through;
+      opacity: 0.7;
+      background: #e9ecef;
+    }
+    button {
+      margin-left: auto;
+      padding: 10px 12px;
+      font-size: 18px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover { background: #c82333; }
+.card {
+  background: var(--color-surface);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Card Row (Flexbox requirement) */
+.card-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card-row .card {
+  flex: 1 1 300px;
+}
+  </style>
+</head>
+<body class="animated-bg">
+  <section class="card">
+  <h2>Task List 📝</h2>
+  
+  <input type="text" id="taskInput" placeholder="New task..." style="padding: 8px; width: 300px;">
+  <button id="addBtn">Add Task</button>
+
+  <ul id="taskList"></ul>
+  </section>
+  <script>
+    const taskList = document.getElementById('taskList');
+    const taskInput = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+
+    // Function to add a new task
+    function addTask(text, isCompleted = false) {
+      if (!text.trim()) return;
+
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="task-text">${text}</span>
+        <button class="delete-btn">Delete</button>
+      `;
+      if (isCompleted) {
+        li.classList.add("completed")
+      }
+      taskList.appendChild(li);
+    }
+
+    // === SINGLE Event Listener (Event Delegation) ===
+    taskList.addEventListener('click', function(event) {
+      
+      // Toggle completed class when clicking on the task text
+      if (event.target.classList.contains('task-text')) {
+        event.target.parentElement.classList.toggle('completed');
+      }
+
+      // Delete task when clicking delete button
+      if (event.target.classList.contains('delete-btn')) {
+        event.target.parentElement.remove();
+      }
+    });
+
+    // Add task when clicking "Add Task" button
+    addBtn.addEventListener('click', () => {
+      addTask(taskInput.value);
+      taskInput.value = '';   // clear input
+    });
+
+    // Allow pressing Enter in input field
+    taskInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addTask(taskInput.value);
+        taskInput.value = '';
+      }
+    });
+
+    // Optional: Add some initial tasks
+    addTask("Learn JavaScript Event Delegation");
+    addTask("Build a todo list", true);
+    addTask("Practice coding daily", true);
+  </script>
+</body>
+</html>
