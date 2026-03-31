@@ -67,4 +67,4 @@ This project focuses on mastering core JavaScript DOM manipulation and event han
 ![To-do list](images/Capture1.PNG)
 
 ## Live Demo (if deployed)
-[To-Do List](https://your-deployed-url.com)
+[To-Do List](https://kimiti4.github.io/iyf-s10-week-05-Kimiti4/)
