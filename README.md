@@ -63,8 +63,8 @@ This project focuses on mastering core JavaScript DOM manipulation and event han
 -Form validation not triggering due to incorrect function structure
 
 ## Screenshots (optional)
-![Task List](assets/screenshot.png)
-![To-do list]()
+![Task List](images/Capture.PNG)
+![To-do list](images/Capture1.PNG)
 
 ## Live Demo (if deployed)
 [To-Do List](https://your-deployed-url.com)
