@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 5: Dark Mode Toggle</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f0f2f5;
+            --transition-speed: 0.3s;
+        }
+        
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --card-bg: #2d2d2d;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        .card {
+            max-width: 600px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color var(--transition-speed);
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .toggle-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 24px;
+            font-size: 16px;
+            background: linear-gradient(270deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .toggle-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 15px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Dark Mode Toggle</h1>
+        <p>This is a demonstration of dark mode functionality with smooth transitions.</p>
+        <p>The preference will be saved in localStorage.</p>
+        
+        <button class="toggle-btn" id="darkModeToggle">🌙 Toggle Dark Mode</button>
+        
+        <p class="status" id="statusText">Current mode: Light</p>
+    </div>
+    
+    <script>
+        const toggleBtn = document.getElementById('darkModeToggle');
+        const statusText = document.getElementById('statusText');
+        const body = document.body;
+        
+        function loadPreference() {
+            const saved = localStorage.getItem('darkMode');
+            if (saved === 'true') {
+                body.classList.add('dark-mode');
+                updateUI(true);
+            }
+        }
+        
+        function savePreference(isDark) {
+            localStorage.setItem('darkMode', isDark);
+        }
+        
+        function updateUI(isDark) {
+            toggleBtn.textContent = isDark ? '☀️ Toggle Light Mode' : '🌙 Toggle Dark Mode';
+            statusText.textContent = `Current mode: ${isDark ? 'Dark' : 'Light'}`;
+        }
+        
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            savePreference(isDark);
+            updateUI(isDark);
+        });
+        
+        loadPreference();
+    </script>
+</body>
+</html>

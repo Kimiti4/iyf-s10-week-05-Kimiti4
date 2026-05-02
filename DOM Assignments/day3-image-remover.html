@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3: Image Remover</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #removeBtn {
+            background: #dc3545;
+            color: white;
+        }
+        #toggleBtn {
+            background: #007bff;
+            color: white;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 200px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        img.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Remover Challenge</h1>
+    
+    <div class="controls">
+        <button id="removeBtn">Remove All Images</button>
+        <button id="toggleBtn">Toggle Hide/Show</button>
+    </div>
+    
+    <div class="image-container">
+        <img src="https://via.placeholder.com/200x150/FF0000/FFFFFF?text=Image+1" alt="Sample 1">
+        <img src="https://via.placeholder.com/200x150/00FF00/FFFFFF?text=Image+2" alt="Sample 2">
+        <img src="https://via.placeholder.com/200x150/0000FF/FFFFFF?text=Image+3" alt="Sample 3">
+    </div>
+    
+    <script>
+        let imagesHidden = false;
+        
+        document.getElementById('removeBtn').addEventListener('click', () => {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => img.remove());
+        });
+        
+        document.getElementById('toggleBtn').addEventListener('click', () => {
+            const images = document.querySelectorAll('img');
+            imagesHidden = !imagesHidden;
+            images.forEach(img => {
+                img.classList.toggle('hidden', imagesHidden);
+            });
+        });
+    </script>
+</body>
+</html>

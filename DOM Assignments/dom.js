@@ -46,14 +46,15 @@ h1.textContent = "New Title"; //modifying content
 
 //exercise 2
 console.log(article.innerHTML);
-article.innerHTML = `
-<h2> Updated Article</h2>
-<p>This is the New Content</p>
-`;
+// Commented out to prevent destructive operations during demo
+// article.innerHTML = `
+// <h2> Updated Article</h2>
+// <p>This is the New Content</p>
+// `;
 
 //safer
 const userInput = "<script>alert('hack!')</script>";
-article.textContent = userInput;
+// article.textContent = userInput; // Commented out for demo
 
 //exercise 3
 const link = document.querySelector(".nav-link")
@@ -97,36 +98,35 @@ const newParagraph = document.createElement("p");
 newParagraph.textContent = "This is a new paragraph!";
 newParagraph.className = "content highlight";
 
-// Add to the page
-//const article = document.querySelector("article");
-article.appendChild(newParagraph);  // Add at end
+// Add to the page - Demonstrated but commented to preserve original content
+// article.appendChild(newParagraph);  // Add at end
 
 // Insert before another element
 const firstParagraph = article.querySelector("p");
-article.insertBefore(newParagraph, firstParagraph);  // Add before first p
+// article.insertBefore(newParagraph, firstParagraph);  // Add before first p
 
-// Modern insertion methods
-article.prepend(newParagraph);         // First child
-article.append(newParagraph);          // Last child
-firstParagraph.before(newParagraph);   // Before sibling
-firstParagraph.after(newParagraph);    // After sibling
+// Modern insertion methods - Examples shown but commented
+// article.prepend(newParagraph);         // First child
+// article.append(newParagraph);          // Last child
+// firstParagraph.before(newParagraph);   // Before sibling
+// firstParagraph.after(newParagraph);    // After sibling
 
 
 // Remove an element
 const footer1 = document.querySelector("footer");
-//footer1.remove();
+// footer1.remove(); // Commented out to keep footer visible
 
-// Remove child
+// Remove child - Demonstrated but commented
 const nav1 = document.querySelector("nav");
-const lastLink = nav.querySelector("li:last-child");
-lastLink.parentElement.removeChild(lastLink);
+const lastLink = nav1.querySelector("li:last-child");
+// lastLink.parentElement.removeChild(lastLink); // Commented out
 
-// Clear all children
-article.innerHTML = "";  // Simple but rebuilds DOM
+// Clear all children - COMMENTED OUT (DESTRUCTIVE)
+// article.innerHTML = "";  // Simple but rebuilds DOM
 // OR
-while (article.firstChild) {
-    article.removeChild(article.firstChild);
-}
+// while (article.firstChild) {
+//     article.removeChild(article.firstChild);
+// }
 
 
 const navItem = document.querySelector(".nav-link").parentElement;
@@ -266,16 +266,16 @@ items.forEach(item => {
 // Problem: New items won't have the listener!
 
 // GOOD: Delegate to parent
-document.querySelector("ul").addEventListener("click", function(event) {
+document.querySelector("ul.nav-list").addEventListener("click", function(event) {
     // Check if clicked element is an li
     const li = event.target.closest("li");
-    if (li) {
-        handleClick(event);
+    if (li && li.parentElement === this) {
+        console.log("List item clicked:", li.textContent.trim());
     }
     
     // Or check for a class
     if (event.target.classList.contains("item")) {
-        handleClick(event);
+        console.log("Item class clicked");
     }
 });
 
@@ -315,31 +315,44 @@ form1.addEventListener("submit", function(event) {
     
     console.log("Form data:", data);
     
-
     // Validate all fields
-function isValid(data) {
-    return data.name.length >= 2 && data.email.includes("@");
+    function isValid(data) {
+        return data.name.length >= 2 && data.email.includes("@");
+    }
     
-}
-        if (isValid(data)) {
-    showSuccess("Form submitted successfully!");
-    form1.reset();
-    
-}
-    
-
-function showSuccess(msg) {
-    alert(msg);
-}
+    if (isValid(data)) {
+        showSuccess("Form submitted successfully!");
+        form1.reset();
+    } else {
+        alert("Please fix the errors in the form");
+    }
 });
 
 function showError(input, message) {
     // Add error styling and message
     input.classList.add("error");
+    input.style.border = "2px solid red";
+    
     // Create or update error message element
+    let errorMsg = input.nextElementSibling;
+    if (!errorMsg || !errorMsg.classList.contains("error-message")) {
+        errorMsg = document.createElement("div");
+        errorMsg.className = "error-message";
+        errorMsg.style.color = "red";
+        errorMsg.style.fontSize = "12px";
+        errorMsg.style.marginTop = "5px";
+        input.parentNode.insertBefore(errorMsg, input.nextSibling);
+    }
+    errorMsg.textContent = message;
 }
 
 function clearError(input) {
     input.classList.remove("error");
+    input.style.border = "";
+    
     // Remove error message
+    const errorMsg = input.nextElementSibling;
+    if (errorMsg && errorMsg.classList.contains("error-message")) {
+        errorMsg.remove();
+    }
 }

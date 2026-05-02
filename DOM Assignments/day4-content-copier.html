@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4: Content Copier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .box {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            min-height: 150px;
+        }
+        #source {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        #target {
+            background: #f3e5f5;
+            border-color: #9c27b0;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #f57c00;
+        }
+        [draggable="true"] {
+            cursor: move;
+            padding: 10px;
+            background: white;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Content Copier Challenge</h1>
+    
+    <div class="container">
+        <div class="box" id="source">
+            <h3>Source</h3>
+            <p draggable="true" id="drag1">Drag me or use the button!</p>
+            <p draggable="true" id="drag2">I can be copied too!</p>
+        </div>
+        
+        <div class="box" id="target">
+            <h3>Target</h3>
+            <p>Content will appear here...</p>
+        </div>
+    </div>
+    
+    <button id="copyBtn">Copy Source to Target</button>
+    
+    <script>
+        const source = document.getElementById('source');
+        const target = document.getElementById('target');
+        const copyBtn = document.getElementById('copyBtn');
+        
+        copyBtn.addEventListener('click', () => {
+            const sourceContent = source.innerHTML;
+            target.innerHTML = '<h3>Target (Copied)</h3>' + sourceContent;
+        });
+        
+        let draggedElement = null;
+        
+        document.querySelectorAll('[draggable="true"]').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                draggedElement = e.target;
+                e.dataTransfer.effectAllowed = 'copy';
+            });
+        });
+        
+        target.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+        });
+        
+        target.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (draggedElement) {
+                const clone = draggedElement.cloneNode(true);
+                clone.removeAttribute('draggable');
+                target.appendChild(clone);
+            }
+        });
+    </script>
+</body>
+</html>

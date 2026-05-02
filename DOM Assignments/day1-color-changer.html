@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: Color Changer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #3333ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #2222cc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Changer Challenge</h1>
+    <h2>Click the button below!</h2>
+    <h3>This heading will change color too</h3>
+    
+    <button id="colorBtn">Change Heading Colors</button>
+    
+    <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        document.getElementById('colorBtn').addEventListener('click', () => {
+            const headings = document.querySelectorAll('h1, h2, h3');
+            headings.forEach(heading => {
+                heading.style.color = getRandomColor();
+            });
+        });
+    </script>
+</body>
+</html>
